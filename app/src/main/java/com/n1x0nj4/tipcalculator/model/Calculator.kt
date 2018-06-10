@@ -3,7 +3,7 @@ package com.n1x0nj4.tipcalculator.model
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-class RestaurantCalculator {
+class Calculator {
 
     fun calculateTip(checkAmount: Double, tipPct: Int): TipCalculation {
 

@@ -4,13 +4,13 @@ import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RestaurantCalculatorTest {
+class CalculatorTest {
 
-    private lateinit var calculator: RestaurantCalculator
+    private lateinit var calculator: Calculator
 
     @Before
     fun setup() {
-        calculator = RestaurantCalculator()
+        calculator = Calculator()
     }
 
     @Test
