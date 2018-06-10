@@ -1,5 +1,6 @@
 package com.n1x0nj4.tipcalculator.viewmodel
 
+import android.util.Log
 import com.n1x0nj4.tipcalculator.model.Calculator
 import com.n1x0nj4.tipcalculator.model.TipCalculation
 
@@ -12,6 +13,8 @@ class CalculatorViewModel(private val calculator: Calculator = Calculator()) {
     var tipCalculation = TipCalculation()
 
     fun calculateTip() {
+        Log.d("VM", "onClickFired")
+
         val checkAmount = inputCheckAmount.toDoubleOrNull()
         val tipPct = inputTipPercentage.toIntOrNull()
 
