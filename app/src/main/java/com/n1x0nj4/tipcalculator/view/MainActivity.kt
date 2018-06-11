@@ -1,5 +1,7 @@
 package com.n1x0nj4.tipcalculator.view
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.vm = CalculatorViewModel()
+        binding.vm = ViewModelProviders.of(this).get(CalculatorViewModel::class.java)
 
         setSupportActionBar(binding.toolbar)
     }

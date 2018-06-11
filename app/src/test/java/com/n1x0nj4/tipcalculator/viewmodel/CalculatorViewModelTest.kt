@@ -1,5 +1,7 @@
 package com.n1x0nj4.tipcalculator.viewmodel
 
+import android.app.Application
+import com.n1x0nj4.tipcalculator.R
 import com.n1x0nj4.tipcalculator.model.Calculator
 import com.n1x0nj4.tipcalculator.model.TipCalculation
 import junit.framework.Assert.assertEquals
@@ -20,11 +22,20 @@ class CalculatorViewModelTest {
     @Mock
     lateinit var mockCalculator: Calculator
 
+    @Mock
+    lateinit var app: Application
+
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
 
-        calculatorViewModel = CalculatorViewModel(mockCalculator)
+        stubResource(0.0, "$0.00")
+
+        calculatorViewModel = CalculatorViewModel(app, mockCalculator)
+    }
+
+    private fun stubResource(given: Double, returnStub: String) {
+        whenever(app.getString(R.string.dollar_amount, given)).thenReturn(returnStub)
     }
 
     @Test
@@ -34,10 +45,15 @@ class CalculatorViewModelTest {
 
         val stub = TipCalculation(checkAmount = 10.00, tipAmount = 1.5, grandTotal = 11.5)
         whenever(mockCalculator.calculateTip(10.00, 15)).thenReturn(stub)
+        stubResource(10.0, "$10.00")
+        stubResource(1.50, "$1.50")
+        stubResource(11.50, "$11.50")
 
         calculatorViewModel.calculateTip()
 
-        assertEquals(stub, calculatorViewModel.tipCalculation)
+        assertEquals("$10.00", calculatorViewModel.outputCheckAmount)
+        assertEquals("$1.50", calculatorViewModel.outputTipAmount)
+        assertEquals("$11.50", calculatorViewModel.outputTotalDollarAmount)
     }
 
     @Test
