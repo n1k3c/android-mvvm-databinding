@@ -14,8 +14,7 @@ import com.n1x0nj4.tipcalculator.viewmodel.CalculatorViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback {
-
+class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback, LoadDialogFragment.Callback {
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +42,10 @@ class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback {
                 showSaveDialog()
                 true
             }
+            R.id.action_load -> {
+                showLoadDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -52,8 +55,18 @@ class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback {
         saveFragment.show(fragmentManager, "SaveDialog")
     }
 
+    private fun showLoadDialog() {
+        val loadFragment = LoadDialogFragment()
+        loadFragment.show(fragmentManager, "LoadDialog")
+    }
+
     override fun onSaveTip(name: String) {
         binding.vm?.saveCurrentTip(name)
         Snackbar.make(binding.root, "Saved $name", Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onTipSelected(name: String) {
+        binding.vm?.loadTipCalculation(name)
+        Snackbar.make(binding.root, "Loaded $name", Snackbar.LENGTH_SHORT).show()
     }
 }

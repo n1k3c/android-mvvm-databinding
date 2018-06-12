@@ -1,6 +1,8 @@
 package com.n1x0nj4.tipcalculator.viewmodel
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations
 import com.n1x0nj4.tipcalculator.R
 import com.n1x0nj4.tipcalculator.model.Calculator
 import com.n1x0nj4.tipcalculator.model.TipCalculation
@@ -46,6 +48,27 @@ class CalculatorViewModel @JvmOverloads constructor(
         if (checkAmount != null && tipPct != null) {
             // Log.d(TAG, "CheckAmount: $checkAmount, TipPercentage: $tipPct")
             updateOutputs(calculator.calculateTip(checkAmount, tipPct))
+        }
+    }
+
+    fun loadSavedTipCalculationSummaries() : LiveData<List<TipCalculationsSummaryItem>> {
+        return Transformations.map(calculator.loadSaveTipCalculations(), { tipCalculationObjects ->
+            tipCalculationObjects.map {
+                TipCalculationsSummaryItem(it.locationName,
+                        getApplication<Application>().getString(R.string.dollar_amount, it.grandTotal))
+            }
+        })
+    }
+
+    fun loadTipCalculation(name: String) {
+        val tc = calculator.loadTipCalculationByLocationName(name)
+
+        if (tc != null) {
+            inputCheckAmount = tc.checkAmount.toString()
+            inputTipPercentage = tc.tipPct.toString()
+
+            updateOutputs(tc)
+            notifyChange()
         }
     }
 }
