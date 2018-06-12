@@ -3,8 +3,6 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.n1x0nj4.tipcalculator.view.MainActivity">
     <item
-            android:id="@+id/action_settings"
-            android:title="@string/action_settings"
-            android:orderInCategory="100"
-            app:showAsAction="never"/>
+            android:id="@+id/action_save"
+            android:title="@string/action_save"/>
 </menu>

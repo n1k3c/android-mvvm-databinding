@@ -14,7 +14,7 @@ import com.n1x0nj4.tipcalculator.viewmodel.CalculatorViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback {
 
     lateinit var binding: ActivityMainBinding
 
@@ -39,8 +39,20 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_save -> {
+                showSaveDialog()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showSaveDialog() {
+        val saveFragment = SaveDialogFragment()
+        saveFragment.show(fragmentManager, "SaveDialog")
+    }
+
+    override fun onSaveTip(name: String) {
+        Snackbar.make(binding.root, "Saved $name", Snackbar.LENGTH_SHORT).show()
     }
 }
