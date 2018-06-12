@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), SaveDialogFragment.Callback {
     }
 
     override fun onSaveTip(name: String) {
+        binding.vm?.saveCurrentTip(name)
         Snackbar.make(binding.root, "Saved $name", Snackbar.LENGTH_SHORT).show()
     }
 }
